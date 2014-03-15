@@ -3,6 +3,7 @@ package udp;
 
 import java.net.*;
 import java.io.*;
+import java.nio.ByteBuffer;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -28,8 +29,16 @@ public class Client {
         
         // Creating Integer Object.
         Integer number = new Integer(50);
-        String numString = String.valueOf(number);
-        sendData = numString.getBytes();
+        
+        // Creating byte array, using ByteBuffer. Array is 4 bytes in size.
+        // Also adding Integer Object to array.
+        // A lot happening here, change later.... YOLO though? ...
+        byte[] bytes = ByteBuffer.allocate(4).putInt(number).array();
+        
+        sendData = bytes;
+        
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        ByteArrayInputStream bis = new ByteArrayInputStream(receiveData);
         
         
         DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length, IPAddress, portNum);
